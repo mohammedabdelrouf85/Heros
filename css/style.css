@@ -765,6 +765,14 @@ html.lenis, html.lenis body {
    Responsive (Mobile First Overrides)
    ========================================================================== */
 @media (max-width: 768px) {
+    .hero {
+        min-height: 100svh;
+    }
+    
+    .hero-bg img {
+        object-position: 85% center;
+    }
+    
     .hero-overlay {
         background: linear-gradient(180deg, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.95) 100%);
     }
