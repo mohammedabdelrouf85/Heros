@@ -766,11 +766,13 @@ html.lenis, html.lenis body {
    ========================================================================== */
 @media (max-width: 768px) {
     .hero {
-        min-height: 100svh;
+        min-height: 85svh; /* Slightly shorter on mobile to preserve image aspect ratio */
+        height: 85svh;
     }
     
     .hero-bg img {
-        object-position: 85% center;
+        object-position: 70% center; /* Adjust to show the body, not just the arm */
+        transform: scale(1); /* Remove the zoom effect on mobile to fit more of the image */
     }
     
     .hero-overlay {
