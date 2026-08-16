@@ -766,13 +766,17 @@ html.lenis, html.lenis body {
    ========================================================================== */
 @media (max-width: 768px) {
     .hero {
-        min-height: 55svh; /* Significantly shorter to show the full landscape dimensions of the image */
-        height: 55svh;
+        min-height: 100svh; /* Fill the entire screen on mobile */
+        height: 100svh;
     }
     
     .hero-bg img {
-        object-position: 50% center; /* Center the image since more of it is visible now */
+        object-position: 65% center; /* Shift slightly right as requested */
         transform: scale(1);
+    }
+    
+    .trust-counters {
+        display: none; /* Hide trust counters on mobile */
     }
     
     .hero-overlay {
