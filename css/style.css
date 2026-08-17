@@ -228,9 +228,9 @@ html.lenis, html.lenis body {
 }
 
 .navbar.scrolled {
-    background-color: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
+    background-color: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .nav-container {
