@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hero animations logic
     function initHeroAnimations() {
-        const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isReducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
         
         // 1. Initial State Setup
         gsap.set('.layer-bg, .layer-foreground', { opacity: 1 }); // base
@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         // 4. Mouse Parallax (Desktop Only)
-        const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        const isDesktop = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)').matches : false;
         if (isDesktop) {
             const bgXTo = gsap.quickTo(".layer-env", "x", {duration: 0.8, ease: "power3"});
             const bgYTo = gsap.quickTo(".layer-env", "y", {duration: 0.8, ease: "power3"});
