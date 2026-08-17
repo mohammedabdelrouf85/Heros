@@ -817,8 +817,9 @@ html.lenis, html.lenis body {
     }
     
     .layer-subject {
-        object-position: center 60%;
-        left: 0; /* Reset position to center */
+        object-position: right 60%;
+        left: -35%; /* Pull the image left to bring the right-aligned boxer to the center */
+        width: 150%; /* Ensure it still covers the screen */
         -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
         mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
     }
