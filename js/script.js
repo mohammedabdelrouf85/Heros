@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Pricing Cards
         gsap.from('.price-card', {
-            y: 80,
+            top: 80,
             opacity: 0,
             duration: 0.8,
             stagger: 0.2,
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const simpleFadeUp = (targets, trigger) => {
             gsap.from(targets, {
-                y: 30,
+                top: 30,
                 opacity: 0,
                 duration: 0.6,
                 stagger: 0.1,
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initSupplementAnimations() {
         // Stagger reveal the cards
         gsap.from('.supp-card', {
-            y: 50,
+            top: 50,
             opacity: 0,
             duration: 0.8,
             stagger: 0.2,
