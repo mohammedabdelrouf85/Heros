@@ -405,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         gsap.to('.layer-subject', {
             y: 40, // Subject moves down, but less than background
+            scale: 1.15, // Dramatic cinematic scale-up on scroll
             ease: "none",
             scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
         });
@@ -418,6 +419,12 @@ document.addEventListener('DOMContentLoaded', () => {
             opacity: 0,
             ease: "none",
             scrollTrigger: { trigger: ".hero", start: "top top", end: "center top", scrub: true }
+        });
+        // Cinematic Exit Fade to Black
+        gsap.to('.hero-layers', {
+            opacity: 0,
+            ease: "power2.inOut",
+            scrollTrigger: { trigger: ".hero", start: "center top", end: "bottom top", scrub: true }
         });
     }
 });
