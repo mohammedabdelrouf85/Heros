@@ -647,7 +647,7 @@ html.lenis, html.lenis body {
     align-items: stretch;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
     .pricing-grid {
         grid-template-columns: repeat(2, 1fr);
     }
