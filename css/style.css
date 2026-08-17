@@ -817,8 +817,8 @@ html.lenis, html.lenis body {
     }
     
     .layer-subject {
-        object-position: right 60%;
-        left: 20%; /* Push the entire image layer to the right */
+        object-position: center 60%;
+        left: 0; /* Reset position to center */
         -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
         mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
     }
