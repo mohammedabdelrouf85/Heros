@@ -250,14 +250,15 @@ html.lenis, html.lenis body {
     mask-image: radial-gradient(circle at 70% 50%, black 30%, transparent 80%);
 }
 
-.layer-gradient {
+.layer-light {
     background: linear-gradient(90deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.7) 40%, transparent 100%);
+    mix-blend-mode: multiply;
 }
 
-.layer-particles {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+.layer-foreground {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
     background-size: 50px 50px;
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 .layer-subject {
@@ -837,7 +838,7 @@ html.lenis, html.lenis body {
         mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
     }
 
-    .layer-gradient {
+    .layer-light {
         /* Bottom-to-top gradient for mobile readability */
         background: linear-gradient(0deg, #050505 0%, rgba(5,5,5,0.85) 45%, transparent 100%);
     }

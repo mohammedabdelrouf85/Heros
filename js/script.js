@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .to('.intro-logo', { opacity: 1, duration: 0.8, ease: "power2.out" })
                 .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
                 .to('.intro-overlay', { opacity: 0, duration: 0.8 }, "-=0.2")
-                .to('.layer-bg, .layer-env, .layer-subject, .layer-gradient, .layer-particles', { opacity: 1, duration: 1 })
+                .to('.layer-bg, .layer-env, .layer-subject, .layer-light, .layer-foreground', { opacity: 1, duration: 1 })
                 .to('.hero-title .word span, .hero-subtitle, .hero-eyebrow, .hero-btn, .navbar', { opacity: 1, duration: 1 });
             return;
         }
@@ -386,6 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const bgYTo = gsap.quickTo(".layer-env", "y", {duration: 0.6, ease: "power3"});
             const subXTo = gsap.quickTo(".layer-subject", "x", {duration: 0.4, ease: "power3"});
             const subYTo = gsap.quickTo(".layer-subject", "y", {duration: 0.4, ease: "power3"});
+            const fgXTo = gsap.quickTo(".layer-foreground", "x", {duration: 0.2, ease: "power3"});
+            const fgYTo = gsap.quickTo(".layer-foreground", "y", {duration: 0.2, ease: "power3"});
 
             document.querySelector('.hero').addEventListener("mousemove", (e) => {
                 const { innerWidth, innerHeight } = window;
@@ -396,6 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 bgYTo(-yNorm * 8);
                 subXTo(xNorm * 12);
                 subYTo(yNorm * 12);
+                fgXTo(xNorm * 25);
+                fgYTo(yNorm * 25);
             });
         }
 
