@@ -329,12 +329,20 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.set('.navbar', { opacity: 0, y: -20 });
 
         if (isReducedMotion) {
-            const overlay = document.querySelector('.intro-overlay');
-            if (overlay) gsap.set(overlay, { display: 'none' });
-
-            gsap.to('.layer-env, .layer-subject, .layer-light, .hero-eyebrow, .hero-title .line span, .hero-subtitle, .hero-btn, .navbar', {
-                opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out", stagger: 0.1
+            const introTl = gsap.timeline({
+                onComplete: () => {
+                    const overlay = document.querySelector('.intro-overlay');
+                    if(overlay) overlay.style.display = 'none';
+                }
             });
+
+            introTl
+                .to('.intro-logo', { opacity: 1, duration: 0.8, ease: "power2.out" })
+                .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
+                .to('.intro-overlay', { opacity: 0, duration: 0.8, ease: "power2.inOut" }, "-=0.2")
+                .to('.layer-env, .layer-subject, .layer-light, .hero-eyebrow, .hero-title .line span, .hero-subtitle, .hero-btn, .navbar', {
+                    opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out", stagger: 0.1
+                });
             return;
         }
 
