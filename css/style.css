@@ -266,21 +266,6 @@ html.lenis, html.lenis body {
     mask-image: linear-gradient(to top, transparent 0%, black 15%, black 100%);
 }
 
-.cursor-light {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 1;
-    will-change: transform;
-    opacity: 0;
-}
-
 .hero-content-wrapper {
     position: relative;
     z-index: 10;

@@ -372,10 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const bgYTo = gsap.quickTo(".layer-env", "y", {duration: 0.6, ease: "power3"});
             const subXTo = gsap.quickTo(".layer-subject", "x", {duration: 0.4, ease: "power3"});
             const subYTo = gsap.quickTo(".layer-subject", "y", {duration: 0.4, ease: "power3"});
-            const lightXTo = gsap.quickTo(".cursor-light", "left", {duration: 0.2, ease: "power3"});
-            const lightYTo = gsap.quickTo(".cursor-light", "top", {duration: 0.2, ease: "power3"});
-
-            gsap.to('.cursor-light', { opacity: 1, duration: 2, delay: 2 });
 
             document.querySelector('.hero').addEventListener("mousemove", (e) => {
                 const { innerWidth, innerHeight } = window;
@@ -386,8 +382,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 bgYTo(-yNorm * 8);
                 subXTo(xNorm * 12);
                 subYTo(yNorm * 12);
-                lightXTo(e.clientX);
-                lightYTo(e.clientY);
             });
         }
 
