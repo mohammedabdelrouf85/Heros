@@ -317,14 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function initHeroAnimations() {
         const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
-        // Remove preloader overlay immediately if present, we don't need it for this entrance
-        const overlay = document.querySelector('.intro-overlay');
-        if (overlay) {
-            gsap.set(overlay, { display: 'none' });
-        }
-
         // 1. Initial State Setup
-        gsap.set('.layer-bg, .layer-foreground', { opacity: 1 }); // 0.00s base
+        gsap.set('.layer-bg, .layer-foreground', { opacity: 1 }); // base
         gsap.set('.layer-env', { opacity: 0, scale: 1.05 });
         gsap.set('.layer-subject', { opacity: 0, scale: 1.08, y: 30 });
         gsap.set('.layer-light', { opacity: 0 });
@@ -335,6 +329,9 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.set('.navbar', { opacity: 0, y: -20 });
 
         if (isReducedMotion) {
+            const overlay = document.querySelector('.intro-overlay');
+            if (overlay) gsap.set(overlay, { display: 'none' });
+
             gsap.to('.layer-env, .layer-subject, .layer-light, .hero-eyebrow, .hero-title .line span, .hero-subtitle, .hero-btn, .navbar', {
                 opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out", stagger: 0.1
             });
@@ -343,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 2. Exact Choreographed Entrance Timeline
         const heroTl = gsap.timeline({
+            paused: true,
             defaults: { ease: "power3.out" }
         });
 
@@ -359,17 +357,32 @@ document.addEventListener('DOMContentLoaded', () => {
             // 1.10s -> Subtitle
             .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.8 }, 1.10)
             // 1.35s -> CTA
-            .to('.hero-btn', { opacity: 1, y: 0, duration: 0.8, stagger: 0.15 }, 1.35);
+            .to('.hero-btn', { opacity: 1, y: 0, duration: 0.8, stagger: 0.15 }, 1.35)
+            .add(() => {
+                // 3. Subtle Continuous Breathing (Starts after entrance)
+                gsap.to('.layer-subject', {
+                    y: 8,
+                    duration: 4,
+                    ease: "sine.inOut",
+                    yoyo: true,
+                    repeat: -1
+                });
+            }, 1.6);
 
-        // 3. Subtle Continuous Breathing (Starts after entrance)
-        gsap.to('.layer-subject', {
-            y: 8,
-            duration: 4,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: 1.6
+        // Preloader Overlay Sequence
+        const introTl = gsap.timeline({
+            onComplete: () => {
+                const overlay = document.querySelector('.intro-overlay');
+                if(overlay) overlay.style.display = 'none';
+                heroTl.play(); // Start hero animation right after preloader finishes fading out
+            }
         });
+
+        introTl
+            .to('.intro-logo', { opacity: 1, duration: 0.8, ease: "power2.out" })
+            .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
+            .to('.intro-overlay', { opacity: 0, duration: 0.8, ease: "power2.inOut" }, "-=0.2");
+
 
         // 4. Mouse Parallax (Desktop Only)
         const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
