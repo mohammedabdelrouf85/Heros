@@ -57,31 +57,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Scroll Animations (Desktop/Tablet)
     mm.add("(min-width: 769px)", () => {
-        // Features Stagger
-        gsap.from('.feature-card', {
-            y: 60,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: ".features-grid",
-                start: "top 80%",
-            }
-        });
+        // Features Storytelling (Pin & Sequential Reveal)
+        const featuresCards = gsap.utils.toArray('.feature-card');
+        if (featuresCards.length > 0) {
+            const featuresTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".features",
+                    start: "top top",
+                    end: "+=150%", // Keep it pinned for 1.5x screen height
+                    pin: true,
+                    scrub: 1
+                }
+            });
 
-        // Zones Stagger
-        gsap.from('.zone-card', {
-            y: 60,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: ".zones-grid",
-                start: "top 80%",
-            }
-        });
+            // Make them all hidden initially
+            gsap.set(featuresCards, { y: 100, opacity: 0 });
+
+            // Reveal them sequentially based on scroll progress
+            featuresCards.forEach((card, i) => {
+                featuresTl.to(card, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.out"
+                }, i * 0.5); // Stagger timing in the scrub timeline
+            });
+        }
+
+        // Zones Horizontal Scroll Storytelling
+        const zonesTrack = document.querySelector('.zones-track');
+        const zonesCards = gsap.utils.toArray('.zone-card');
+        
+        if (zonesTrack && zonesCards.length > 0) {
+            gsap.to(zonesTrack, {
+                x: () => -(zonesTrack.scrollWidth - window.innerWidth + 40),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".zones",
+                    start: "top top",
+                    end: () => `+=${zonesTrack.scrollWidth}`, // Scroll duration based on content width
+                    pin: true,
+                    scrub: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+            
+            // Add subtle parallax to the images inside cards during horizontal scroll
+            zonesCards.forEach(card => {
+                const img = card.querySelector('img');
+                if (img) {
+                    gsap.to(img, {
+                        xPercent: 20,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: ".zones",
+                            start: "top top",
+                            end: () => `+=${zonesTrack.scrollWidth}`,
+                            scrub: true
+                        }
+                    });
+                }
+            });
+        }
 
         // Pricing Cards
         gsap.from('.price-card', {
@@ -116,8 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        simpleFadeUp('.feature-card', '.features-grid');
-        simpleFadeUp('.zone-card', '.zones-grid');
+        simpleFadeUp('.feature-card', '.features');
+        simpleFadeUp('.zone-card', '.zones-track');
         simpleFadeUp('.price-card', '.pricing-grid');
     });
 
