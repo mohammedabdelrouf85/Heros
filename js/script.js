@@ -47,13 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let mm = gsap.matchMedia();
 
     // Split Hero Title
-    const heroTitle = document.getElementById('hero-title');
+    const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
         splitTextIntoWords(heroTitle);
     }
 
-    // 3. Initialize Cinematic Hero Animations
-    initHeroAnimations();
+    // 3. Initialize Cinematic Hero Animations (Wait for images to load)
+    if (document.readyState === 'complete') {
+        initHeroAnimations();
+    } else {
+        window.addEventListener('load', initHeroAnimations);
+    }
 
     // 4. Scroll Animations (Desktop/Tablet)
     mm.add("(min-width: 769px)", () => {
@@ -342,6 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.set('.layer-bg', { opacity: 0 });
         gsap.set('.layer-env', { scale: 1.08, opacity: 0 });
         gsap.set('.layer-subject', { scale: 0.92, x: 40, opacity: 0 });
+        gsap.set('.layer-light, .layer-foreground', { opacity: 0 });
         gsap.set('.hero-subtitle, .hero-eyebrow, .hero-btn', { y: 20, opacity: 0 });
         gsap.set('.navbar', { y: -100, opacity: 0 });
 
@@ -362,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .to('.layer-bg', { opacity: 1, duration: 1 }, "-=0.5")
             .to('.layer-env', { scale: 1, opacity: 1, duration: 1.5, ease: "power3.out" }, "-=0.8")
             .to('.layer-subject', { scale: 1, x: 0, opacity: 1, duration: 1.4, ease: "power3.out" }, "-=1.2")
+            .to('.layer-light, .layer-foreground', { opacity: 1, duration: 1.5, ease: "power2.out" }, "-=1.0")
             .fromTo('.hero-title .word span', 
                 { y: 60, opacity: 0 }, 
                 { y: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: "power3.out" }, 
