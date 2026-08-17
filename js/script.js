@@ -391,19 +391,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         gsap.to('.layer-env', {
-            y: 50,
+            y: 100, // Background moves down a lot (stays behind)
             ease: "none",
             scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
         });
         gsap.to('.layer-subject', {
-            y: -30,
-            scale: 0.95,
-            opacity: 0.5,
+            y: 40, // Subject moves down, but less than background
+            ease: "none",
+            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+        });
+        gsap.to('.layer-light, .layer-foreground', {
+            y: -60, // Foreground moves up
             ease: "none",
             scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
         });
         gsap.to('.hero-content-wrapper', {
-            y: -50,
+            y: -100, // Text moves up fastest
             opacity: 0,
             ease: "none",
             scrollTrigger: { trigger: ".hero", start: "top top", end: "center top", scrub: true }
