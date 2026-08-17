@@ -325,10 +325,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        gsap.set('.layer-bg', { opacity: 0 });
-        gsap.set('.layer-env', { scale: 1.08, opacity: 0 });
-        gsap.set('.layer-subject', { scale: 0.92, x: 40, opacity: 0 });
-        gsap.set('.hero-subtitle, .hero-eyebrow, .hero-btn', { y: 20, opacity: 0 });
+        // Initial states
+        gsap.set('.hero-bg', { scale: 1.15, opacity: 0 });
+        gsap.set('.hero-vignette, .hero-grain', { opacity: 0 });
+        gsap.set('.hero-subtitle, .hero-eyebrow, .hero-btn', { y: 30, opacity: 0 });
         gsap.set('.navbar', { y: -100, opacity: 0 });
 
         if (isReducedMotion) {
@@ -336,69 +336,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 .to('.intro-logo', { opacity: 1, duration: 0.8, ease: "power2.out" })
                 .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
                 .to('.intro-overlay', { opacity: 0, duration: 0.8 }, "-=0.2")
-                .to('.layer-bg, .layer-env, .layer-subject, .layer-gradient, .layer-particles', { opacity: 1, duration: 1 })
+                .to('.hero-bg, .hero-vignette, .hero-grain', { opacity: 1, duration: 1 })
                 .to('.hero-title .word span, .hero-subtitle, .hero-eyebrow, .hero-btn, .navbar', { opacity: 1, duration: 1 });
             return;
         }
 
+        // Cinematic Entrance
         introTl
             .to('.intro-logo', { opacity: 1, duration: 0.8, ease: "power2.out" })
             .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
             .to('.intro-overlay', { opacity: 0, duration: 0.8, ease: "power2.inOut" }, "-=0.2")
-            .to('.layer-bg', { opacity: 1, duration: 1 }, "-=0.5")
-            .to('.layer-env', { scale: 1, opacity: 1, duration: 1.5, ease: "power3.out" }, "-=0.8")
-            .to('.layer-subject', { scale: 1, x: 0, opacity: 1, duration: 1.4, ease: "power3.out" }, "-=1.2")
+            // Slow zoom out on the background
+            .to('.hero-bg', { scale: 1, opacity: 1, duration: 3.5, ease: "power2.out" }, "-=0.5")
+            .to('.hero-vignette, .hero-grain', { opacity: 1, duration: 1.5 }, "-=3.0")
+            // Text emerging from shadows
             .fromTo('.hero-title .word span', 
-                { y: 60, opacity: 0 }, 
-                { y: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: "power3.out" }, 
-                "-=1.0"
+                { y: 80, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.2, stagger: 0.08, ease: "power3.out" }, 
+                "-=2.5"
             )
-            .to('.hero-eyebrow, .hero-subtitle', { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.6")
-            .to('.hero-btn', { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }, "-=0.6")
-            .to('.navbar', { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.5");
+            .to('.hero-eyebrow, .hero-subtitle', { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=1.8")
+            .to('.hero-btn', { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power2.out" }, "-=1.5")
+            .to('.navbar', { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=2.0");
 
-        gsap.to('.layer-subject', {
-            y: 8,
-            duration: 3.5,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: 2
-        });
-
+        // Subtle Mouse Pan (Cinematic Feel)
         const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
         if (isDesktop) {
-            const bgXTo = gsap.quickTo(".layer-env", "x", {duration: 0.6, ease: "power3"});
-            const bgYTo = gsap.quickTo(".layer-env", "y", {duration: 0.6, ease: "power3"});
-            const subXTo = gsap.quickTo(".layer-subject", "x", {duration: 0.4, ease: "power3"});
-            const subYTo = gsap.quickTo(".layer-subject", "y", {duration: 0.4, ease: "power3"});
+            const bgXTo = gsap.quickTo(".hero-bg", "x", {duration: 1.2, ease: "power3"});
+            const bgYTo = gsap.quickTo(".hero-bg", "y", {duration: 1.2, ease: "power3"});
 
             document.querySelector('.hero').addEventListener("mousemove", (e) => {
                 const { innerWidth, innerHeight } = window;
                 const xNorm = (e.clientX / innerWidth) * 2 - 1;
                 const yNorm = (e.clientY / innerHeight) * 2 - 1;
-
-                bgXTo(-xNorm * 8);
-                bgYTo(-yNorm * 8);
-                subXTo(xNorm * 12);
-                subYTo(yNorm * 12);
+                
+                // Very subtle movement for high-end feel
+                bgXTo(-xNorm * 15);
+                bgYTo(-yNorm * 15);
             });
         }
 
-        gsap.to('.layer-env', {
+        // Scroll Transition
+        gsap.to('.hero-bg', {
             y: 50,
-            ease: "none",
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
-        });
-        gsap.to('.layer-subject', {
-            y: -30,
-            scale: 0.95,
-            opacity: 0.5,
+            opacity: 0.3,
             ease: "none",
             scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
         });
         gsap.to('.hero-content-wrapper', {
-            y: -50,
+            y: -80,
             opacity: 0,
             ease: "none",
             scrollTrigger: { trigger: ".hero", start: "top top", end: "center top", scrub: true }
