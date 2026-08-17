@@ -345,7 +345,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .to('.intro-logo', { opacity: 1, duration: 0.8, ease: "power2.out" })
             .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
             .to('.intro-overlay', { opacity: 0, duration: 0.8, ease: "power2.inOut" }, "-=0.2")
-            .to('.layer-bg', { opacity: 1, duration: 1 }, "-=0.5")
+            .to('.hero-btn, .navbar', { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power2.out" }, "-=0.6")
+            .to('.layer-bg', { opacity: 1, duration: 1 }, "-=0.8")
             .to('.layer-env', { scale: 1, opacity: 1, duration: 1.5, ease: "power3.out" }, "-=0.8")
             .to('.layer-subject', { scale: 1, x: 0, opacity: 1, duration: 1.4, ease: "power3.out" }, "-=1.2")
             .to('.layer-light, .layer-foreground', { opacity: 1, duration: 1.5, ease: "power2.out" }, "-=1.0")
@@ -354,9 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out" }, 
                 "-=1.0"
             )
-            .to('.hero-eyebrow, .hero-subtitle', { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.6")
-            .to('.hero-btn', { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }, "-=0.6")
-            .to('.navbar', { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.5");
+            .to('.hero-eyebrow, .hero-subtitle', { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.6");
 
         gsap.to('.layer-subject', {
             y: 8,
