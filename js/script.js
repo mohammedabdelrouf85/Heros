@@ -369,24 +369,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
         if (isDesktop) {
-            const bgXTo = gsap.quickTo(".layer-env", "x", {duration: 0.6, ease: "power3"});
-            const bgYTo = gsap.quickTo(".layer-env", "y", {duration: 0.6, ease: "power3"});
-            const subXTo = gsap.quickTo(".layer-subject", "x", {duration: 0.4, ease: "power3"});
-            const subYTo = gsap.quickTo(".layer-subject", "y", {duration: 0.4, ease: "power3"});
+            const bgXTo = gsap.quickTo(".layer-env", "x", {duration: 0.8, ease: "power3"});
+            const bgYTo = gsap.quickTo(".layer-env", "y", {duration: 0.8, ease: "power3"});
+            const subXTo = gsap.quickTo(".layer-subject", "x", {duration: 0.5, ease: "power3"});
+            const subYTo = gsap.quickTo(".layer-subject", "y", {duration: 0.5, ease: "power3"});
+            const lightXTo = gsap.quickTo(".layer-light", "x", {duration: 0.3, ease: "power3"});
+            const lightYTo = gsap.quickTo(".layer-light", "y", {duration: 0.3, ease: "power3"});
             const fgXTo = gsap.quickTo(".layer-foreground", "x", {duration: 0.2, ease: "power3"});
             const fgYTo = gsap.quickTo(".layer-foreground", "y", {duration: 0.2, ease: "power3"});
+            const textXTo = gsap.quickTo(".hero-content-wrapper", "x", {duration: 0.4, ease: "power3"});
+            const textYTo = gsap.quickTo(".hero-content-wrapper", "y", {duration: 0.4, ease: "power3"});
 
             document.querySelector('.hero').addEventListener("mousemove", (e) => {
                 const { innerWidth, innerHeight } = window;
                 const xNorm = (e.clientX / innerWidth) * 2 - 1;
                 const yNorm = (e.clientY / innerHeight) * 2 - 1;
 
-                bgXTo(-xNorm * 8);
-                bgYTo(-yNorm * 8);
-                subXTo(xNorm * 12);
-                subYTo(yNorm * 12);
-                fgXTo(xNorm * 25);
-                fgYTo(yNorm * 25);
+                bgXTo(-xNorm * 15);
+                bgYTo(-yNorm * 15);
+                subXTo(xNorm * 20);
+                subYTo(yNorm * 20);
+                lightXTo(-xNorm * 35);
+                lightYTo(-yNorm * 35);
+                fgXTo(xNorm * 40);
+                fgYTo(yNorm * 40);
+                textXTo(xNorm * 10);
+                textYTo(yNorm * 10);
             });
         }
 
