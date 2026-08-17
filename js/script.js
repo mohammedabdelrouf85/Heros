@@ -84,41 +84,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Zones Horizontal Scroll Storytelling
-        const zonesTrack = document.querySelector('.zones-track');
-        const zonesCards = gsap.utils.toArray('.zone-card');
-        
-        if (zonesTrack && zonesCards.length > 0) {
-            gsap.to(zonesTrack, {
-                x: () => -(zonesTrack.scrollWidth - window.innerWidth + 40),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: ".zones",
-                    start: "top top",
-                    end: () => `+=${zonesTrack.scrollWidth}`, // Scroll duration based on content width
-                    pin: true,
-                    scrub: 1,
-                    invalidateOnRefresh: true
-                }
-            });
-            
-            // Add subtle parallax to the images inside cards during horizontal scroll
-            zonesCards.forEach(card => {
-                const img = card.querySelector('img');
-                if (img) {
-                    gsap.to(img, {
-                        xPercent: 20,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: ".zones",
-                            start: "top top",
-                            end: () => `+=${zonesTrack.scrollWidth}`,
-                            scrub: true
-                        }
-                    });
-                }
-            });
-        }
+        // Zones Stagger
+        gsap.from('.zone-card', {
+            y: 60,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: ".zones-grid",
+                start: "top 80%",
+            }
+        });
 
         // Pricing Cards
         gsap.from('.price-card', {
@@ -154,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         simpleFadeUp('.feature-card', '.features');
-        simpleFadeUp('.zone-card', '.zones-track');
+        simpleFadeUp('.zone-card', '.zones-grid');
         simpleFadeUp('.price-card', '.pricing-grid');
     });
 

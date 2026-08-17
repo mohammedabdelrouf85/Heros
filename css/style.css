@@ -406,30 +406,17 @@ html.lenis, html.lenis body {
     background-color: var(--bg-surface);
 }
 
-.zones {
-    overflow: hidden;
-}
-
-.zones-wrapper {
-    width: 100%;
-    /* No overflow-x here, GSAP will move the track */
-}
-
-.zones-track {
-    display: flex;
-    flex-wrap: nowrap;
+.zones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: var(--spacing-lg);
-    padding: 0 var(--spacing-lg);
-    width: fit-content;
 }
 
 .zone-card {
     position: relative;
     border-radius: var(--border-radius);
     overflow: hidden;
-    height: 450px;
-    width: 400px;
-    flex-shrink: 0;
+    height: 400px;
 }
 
 .zone-card img {
@@ -848,17 +835,6 @@ html.lenis, html.lenis body {
     
     .hero-text {
         text-align: center;
-    }
-
-    .zones-track {
-        flex-direction: column;
-        width: 100%;
-        padding: 0;
-    }
-
-    .zone-card {
-        width: 100%;
-        height: 350px;
     }
         padding-top: 0;
         padding-bottom: var(--spacing-xxl);
