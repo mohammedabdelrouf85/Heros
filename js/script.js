@@ -55,6 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Initialize Cinematic Hero Animations
     initHeroAnimations();
 
+    // 4. Scroll Animations (Desktop/Tablet)
+    mm.add("(min-width: 769px)", () => {
         // Features Stagger
         gsap.from('.feature-card', {
             y: 60,
