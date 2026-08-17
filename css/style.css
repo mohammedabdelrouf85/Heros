@@ -336,7 +336,6 @@ html.lenis, html.lenis body {
 .hero-title .line {
     display: block;
     overflow: hidden;
-    vertical-align: top;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
     margin-bottom: -0.2em;
@@ -880,7 +879,6 @@ html.lenis, html.lenis body {
     
     .hero-text {
         text-align: center;
-    }
         padding-top: 0;
         padding-bottom: var(--spacing-xxl);
         margin-left: auto;
