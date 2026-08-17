@@ -37,17 +37,24 @@
 
     <!-- Hero Section -->
     <header class="hero" id="home">
-        <!-- Background Image overlay -->
-        <div class="hero-bg">
-            <img src="assets/images/128075090_2449096125236236_8274144066068106337_n.jpg" alt="Heroes Gym Training" onerror="this.src='https://placehold.co/1920x1080/0A0A0A/333?text=Cinematic+Hero'">
+        <div class="hero-layers">
+            <div class="hero-layer layer-bg"></div>
+            <img class="hero-layer layer-env" src="assets/images/128075090_2449096125236236_8274144066068106337_n.jpg" alt="Heroes Gym Environment">
+            <div class="hero-layer layer-gradient"></div>
+            <div class="hero-layer layer-particles"></div>
+            <img class="hero-layer layer-subject" src="assets/images/bodybuilding.png" alt="Heroes Gym Athlete">
+            <div class="cursor-light"></div>
         </div>
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <h1 class="hero-title" id="hero-title">مصنع الأبطال في العمرانية.</h1>
-            <p class="hero-subtitle">لا نؤجر لك أجهزة، بل نضمن لك النتيجة. انضم لتجربة الـ VIP الأقوى وتدرب مع الأبطال.</p>
-            <div class="hero-actions">
-                <a href="#pricing" class="btn btn-primary">احجز عرضك الآن</a>
-                <a href="#zones" class="btn btn-outline">اكتشف الجيم</a>
+
+        <div class="container hero-content-wrapper">
+            <div class="hero-text">
+                <span class="hero-eyebrow">HEROES GYM</span>
+                <h1 class="hero-title">مصنع الأبطال<br>في العمرانية.</h1>
+                <p class="hero-subtitle">لا نؤجر لك أجهزة، بل نضمن لك النتيجة. انضم لتجربة الـ VIP الأقوى وتدرب مع الأبطال.</p>
+                <div class="hero-actions">
+                    <a href="#pricing" class="btn btn-primary hero-btn">احجز عرضك الآن</a>
+                    <a href="#zones" class="btn btn-outline hero-btn">اكتشف الجيم</a>
+                </div>
             </div>
         </div>
     </header>

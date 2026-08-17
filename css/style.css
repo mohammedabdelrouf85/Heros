@@ -215,72 +215,126 @@ html.lenis, html.lenis body {
 .hero {
     position: relative;
     height: 100vh;
+    min-height: 100svh;
     display: flex;
     align-items: center;
     overflow: hidden;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    background-color: #050505;
 }
 
-.hero-bg {
+.hero-layers {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    z-index: -2;
+    z-index: 0;
+    pointer-events: none;
 }
 
-.hero-bg img {
-    width: 100%;
-    height: 100%;
+.hero-layer {
+    position: absolute;
+    inset: -5%;
+    width: 110%;
+    height: 110%;
     object-fit: cover;
-    filter: contrast(1.1) desaturate(0.2);
-    transform: scale(1.1); /* To allow parallax without showing edges */
+    will-change: transform;
 }
 
-.hero-overlay {
+.layer-bg {
+    background: radial-gradient(circle at 70% 50%, #151515 0%, #050505 100%);
+}
+
+.layer-env {
+    filter: contrast(1.1) desaturate(0.3) brightness(0.6);
+    -webkit-mask-image: radial-gradient(circle at 70% 50%, black 30%, transparent 80%);
+    mask-image: radial-gradient(circle at 70% 50%, black 30%, transparent 80%);
+}
+
+.layer-gradient {
+    background: linear-gradient(90deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.7) 40%, transparent 100%);
+}
+
+.layer-particles {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+}
+
+.layer-subject {
+    object-position: right center;
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%, black 100%);
+    mask-image: linear-gradient(to top, transparent 0%, black 15%, black 100%);
+}
+
+.cursor-light {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.4) 100%);
-    z-index: -1;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform;
+    opacity: 0;
 }
 
-.hero-content {
-    max-width: 800px;
+.hero-content-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.hero-text {
+    max-width: 650px;
+    padding-top: var(--spacing-xl);
+}
+
+.hero-eyebrow {
+    display: block;
+    color: var(--accent-primary);
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-sm);
 }
 
 .hero-title {
-    font-size: clamp(3rem, 5vw, 5rem);
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
     margin-bottom: var(--spacing-md);
-    line-height: 1.4;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    line-height: 1.1;
+    font-weight: 900;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
     display: flex;
     flex-wrap: wrap;
-    gap: 0 0.5rem; /* Gap for words */
+    gap: 0 0.5rem;
 }
 
-/* For the word splitting in hero title */
 .hero-title .word {
     display: inline-block;
     overflow: hidden;
     vertical-align: top;
     padding-top: 0.2em;
-    padding-bottom: 0.3em;
+    padding-bottom: 0.2em;
     margin-top: -0.2em;
-    margin-bottom: -0.3em;
+    margin-bottom: -0.2em;
 }
+
 .hero-title .word span {
     display: inline-block;
 }
 
 .hero-subtitle {
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
     color: var(--text-secondary);
-    margin-bottom: var(--spacing-lg);
-    max-width: 600px;
+    margin-bottom: var(--spacing-xl);
+    max-width: 500px;
+    line-height: 1.6;
 }
 
 .hero-actions {
@@ -772,30 +826,36 @@ html.lenis, html.lenis body {
    ========================================================================== */
 @media (max-width: 768px) {
     .hero {
-        min-height: 100svh; /* Fill the entire screen on mobile */
+        min-height: 100svh;
         height: 100svh;
+        align-items: flex-end; /* Push content to bottom */
     }
     
-    .hero-bg img {
-        object-position: 65% center; /* Shift slightly right as requested */
-        transform: scale(1);
+    .layer-subject {
+        object-position: right 60%; /* Show more of the subject */
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
+        mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
+    }
+
+    .layer-gradient {
+        /* Bottom-to-top gradient for mobile readability */
+        background: linear-gradient(0deg, #050505 0%, rgba(5,5,5,0.85) 45%, transparent 100%);
+    }
+
+    .hero-content-wrapper {
+        justify-content: center;
     }
     
-    .trust-counters {
-        display: none; /* Hide trust counters on mobile */
-    }
-    
-    .hero-overlay {
-        background: linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.8) 50%, rgba(10,10,10,1) 100%);
-    }
-    
-    .hero-content {
+    .hero-text {
         text-align: center;
-        padding-top: var(--spacing-xl);
+        padding-top: 0;
+        padding-bottom: var(--spacing-xxl);
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2.8rem;
         justify-content: center;
     }
     
@@ -805,16 +865,18 @@ html.lenis, html.lenis body {
         margin-right: auto;
     }
     
-    .section-header h2 {
-        font-size: 1.8rem;
-    }
-    
     .hero-actions {
         flex-direction: column;
+        width: 100%;
+        padding: 0 var(--spacing-md);
     }
     
     .hero-actions .btn {
         width: 100%;
+    }
+    
+    .trust-counters {
+        display: none;
     }
     
     .countdown {
