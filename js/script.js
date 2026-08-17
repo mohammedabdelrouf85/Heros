@@ -1,18 +1,3 @@
-// Custom Text Splitter Utility
-function splitTextIntoWords(element) {
-    if (!element) return;
-    const text = element.innerText;
-    element.innerHTML = '';
-    const words = text.split(' ');
-    words.forEach((word, index) => {
-        const wordDiv = document.createElement('div');
-        wordDiv.className = 'word';
-        const span = document.createElement('span');
-        span.innerText = word + (index < words.length - 1 ? '\u00A0' : ''); // Add non-breaking space
-        wordDiv.appendChild(span);
-        element.appendChild(wordDiv);
-    });
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Lenis Smooth Scroll
@@ -46,11 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Setup GSAP MatchMedia for responsiveness
     let mm = gsap.matchMedia();
 
-    // Split Hero Title
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        splitTextIntoWords(heroTitle);
-    }
+
 
     // 3. Initialize Cinematic Hero Animations (Wait for images to load)
     if (document.readyState === 'complete') {
