@@ -817,7 +817,7 @@ html.lenis, html.lenis body {
     }
     
     .layer-subject {
-        object-position: right 60%; /* Show more of the subject */
+        object-position: calc(100% + 60px) 60%; /* Shift slightly right as requested */
         -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
         mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
     }
