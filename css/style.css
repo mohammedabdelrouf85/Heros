@@ -229,37 +229,41 @@ html.lenis, html.lenis body {
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    overflow: hidden;
 }
 
-.hero-bg {
+.hero-layer {
     position: absolute;
     inset: -5%;
     width: 110%;
     height: 110%;
     object-fit: cover;
-    object-position: center top;
     will-change: transform;
-    filter: contrast(1.2) desaturate(0.2) brightness(0.6) opacity(0.85);
 }
 
-.hero-vignette {
-    position: absolute;
-    inset: 0;
-    /* Dramatic dark vignette with radial and linear gradients */
-    background: 
-        linear-gradient(90deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.4) 50%, transparent 100%),
-        radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.8) 100%);
-    mix-blend-mode: multiply;
+.layer-bg {
+    background: radial-gradient(circle at 70% 50%, #151515 0%, #050505 100%);
 }
 
-.hero-grain {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.15;
-    mix-blend-mode: overlay;
-    pointer-events: none;
+.layer-env {
+    filter: contrast(1.1) desaturate(0.3) brightness(0.6);
+    -webkit-mask-image: radial-gradient(circle at 70% 50%, black 30%, transparent 80%);
+    mask-image: radial-gradient(circle at 70% 50%, black 30%, transparent 80%);
+}
+
+.layer-gradient {
+    background: linear-gradient(90deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.7) 40%, transparent 100%);
+}
+
+.layer-particles {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+}
+
+.layer-subject {
+    object-position: right center;
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%, black 100%);
+    mask-image: linear-gradient(to top, transparent 0%, black 15%, black 100%);
 }
 
 .hero-content-wrapper {
@@ -806,18 +810,22 @@ html.lenis, html.lenis body {
    Responsive (Mobile First Overrides)
    ========================================================================== */
 @media (max-width: 768px) {
-    .hero-content-wrapper {
+    .hero {
         min-height: 100svh;
         height: 100svh;
         align-items: flex-end; /* Push content to bottom */
     }
     
-    .hero-bg {
-        object-position: 70% top; /* Better focus on mobile */
+    .layer-subject {
+        object-position: right 60%;
+        left: -35%; /* Pull the image left to bring the right-aligned boxer to the center */
+        width: 150%; /* Ensure it still covers the screen */
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
+        mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
     }
 
-    .hero-vignette {
-        /* Bottom-heavy gradient for mobile text readability */
+    .layer-gradient {
+        /* Bottom-to-top gradient for mobile readability */
         background: linear-gradient(0deg, #050505 0%, rgba(5,5,5,0.85) 45%, transparent 100%);
     }
 
