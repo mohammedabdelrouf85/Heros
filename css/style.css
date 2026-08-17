@@ -932,3 +932,97 @@ html.lenis, html.lenis body {
         height: 30px;
     }
 }
+
+/* ==========================================================================
+   Mobile Menu Overlay
+   ========================================================================== */
+.desktop-only {
+    display: none;
+}
+@media (min-width: 768px) {
+    .desktop-only {
+        display: inline-flex;
+    }
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.hamburger span:nth-child(2) {
+    width: 20px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    width: 30px;
+}
+
+.hamburger.active span:nth-child(2) {
+    transform: translateY(0px) rotate(-45deg);
+    width: 30px;
+}
+
+@media (min-width: 768px) {
+    .hamburger {
+        display: none;
+    }
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(15px);
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.menu-links {
+    text-align: center;
+    padding: 0;
+}
+
+.menu-links li {
+    margin-bottom: var(--spacing-lg);
+    overflow: hidden;
+}
+
+.menu-link {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    color: var(--text-primary);
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.menu-link:hover {
+    color: var(--accent-primary);
+}

@@ -426,4 +426,53 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollTrigger: { trigger: ".hero", start: "center top", end: "bottom top", scrub: true }
         });
     }
+
+    // ==========================================================================
+    // 6. Mobile Menu Toggle with GSAP
+    // ==========================================================================
+    const hamburger = document.querySelector('.hamburger');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    if (hamburger && menuOverlay) {
+        let isMenuOpen = false;
+        
+        // GSAP Timeline for Menu Animation
+        const menuTl = gsap.timeline({ paused: true });
+        
+        menuTl.to(menuOverlay, {
+            autoAlpha: 1, // handles visibility and opacity
+            duration: 0.4,
+            ease: "power2.inOut"
+        })
+        .to(menuLinks, {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.1,
+            ease: "power3.out"
+        }, "-=0.2");
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            hamburger.classList.toggle('active', isMenuOpen);
+            
+            if (isMenuOpen) {
+                lenis.stop(); // Prevent scrolling while menu is open
+                menuTl.play();
+            } else {
+                lenis.start();
+                menuTl.reverse();
+            }
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a link
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMenu();
+            });
+        });
+    }
 });

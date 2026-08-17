@@ -24,16 +24,37 @@
         <div class="intro-logo">Heroes Gym</div>
     </div>
 
-    <!-- Navbar -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">
                 <!-- Logo -->
                 <img src="assets/images/icon.png" alt="Heroes Gym Logo" onerror="this.src='https://placehold.co/100x100/141414/FFF?text=HG'">
             </a>
-            <a href="#pricing" class="btn btn-outline">الاشتراكات</a>
+            
+            <!-- Desktop CTA (hidden on mobile) -->
+            <a href="#pricing" class="btn btn-outline desktop-only">الاشتراكات</a>
+
+            <!-- Hamburger Button -->
+            <button class="hamburger" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Fullscreen Menu Overlay -->
+    <div class="menu-overlay">
+        <div class="menu-content">
+            <ul class="menu-links">
+                <li><a href="#home" class="menu-link">الرئيسية</a></li>
+                <li><a href="#features" class="menu-link">لماذا هيروز؟</a></li>
+                <li><a href="#zones" class="menu-link">مناطق التدريب</a></li>
+                <li><a href="#pricing" class="menu-link">الاشتراكات</a></li>
+                <li><a href="#supplements" class="menu-link">المكملات</a></li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <header class="hero" id="home">
