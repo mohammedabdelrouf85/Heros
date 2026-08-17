@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
                 .to('.intro-overlay', { opacity: 0, duration: 0.8 }, "-=0.2")
                 .to('.layer-bg, .layer-env, .layer-subject, .layer-light, .layer-foreground', { opacity: 1, duration: 1 })
-                .to('.hero-title .word span, .hero-subtitle, .hero-eyebrow, .hero-btn, .navbar', { opacity: 1, duration: 1 });
+                .to('.hero-title .line span, .hero-subtitle, .hero-eyebrow, .hero-btn, .navbar', { opacity: 1, duration: 1 });
             return;
         }
 
@@ -349,9 +349,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .to('.layer-env', { scale: 1, opacity: 1, duration: 1.5, ease: "power3.out" }, "-=0.8")
             .to('.layer-subject', { scale: 1, x: 0, opacity: 1, duration: 1.4, ease: "power3.out" }, "-=1.2")
             .to('.layer-light, .layer-foreground', { opacity: 1, duration: 1.5, ease: "power2.out" }, "-=1.0")
-            .fromTo('.hero-title .word span', 
-                { y: 60, opacity: 0 }, 
-                { y: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: "power3.out" }, 
+            .fromTo('.hero-title .line span', 
+                { y: 80, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out" }, 
                 "-=1.0"
             )
             .to('.hero-eyebrow, .hero-subtitle', { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.6")

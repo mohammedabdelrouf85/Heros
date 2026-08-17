@@ -301,18 +301,17 @@ html.lenis, html.lenis body {
     gap: 0 0.5rem;
 }
 
-.hero-title .word {
-    display: inline-block;
+.hero-title .line {
+    display: block;
     overflow: hidden;
     vertical-align: top;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
-    margin-top: -0.3em;
-    margin-bottom: -0.3em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
 }
 
-.hero-title .word span {
-    display: inline-block;
+.hero-title .line span {
+    display: block;
 }
 
 .hero-subtitle {
