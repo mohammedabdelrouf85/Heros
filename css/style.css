@@ -277,30 +277,26 @@ html.lenis, html.lenis body {
 }
 
 .layer-bg {
-    background: radial-gradient(circle at 70% 50%, #151515 0%, #050505 100%);
+    background: radial-gradient(circle at 60% 50%, #1a1025 0%, #050505 80%);
 }
 
 .layer-env {
-    filter: contrast(1.1) desaturate(0.3) brightness(0.6);
-    -webkit-mask-image: radial-gradient(circle at 70% 50%, black 30%, transparent 80%);
-    mask-image: radial-gradient(circle at 70% 50%, black 30%, transparent 80%);
-}
-
-.layer-light {
-    background: linear-gradient(90deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.7) 40%, transparent 100%);
-    mix-blend-mode: multiply;
-}
-
-.layer-foreground {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-    background-size: 50px 50px;
-    opacity: 0.5;
+    filter: contrast(1.1) desaturate(0.5) brightness(0.5) blur(4px);
+    -webkit-mask-image: radial-gradient(circle at 70% 50%, black 20%, transparent 90%);
+    mask-image: radial-gradient(circle at 70% 50%, black 20%, transparent 90%);
 }
 
 .layer-subject {
     object-position: right center;
-    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%, black 100%);
-    mask-image: linear-gradient(to top, transparent 0%, black 15%, black 100%);
+    filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+}
+
+.layer-light {
+    background: linear-gradient(90deg, #050505 0%, rgba(5,5,5,0.85) 35%, transparent 80%);
+}
+
+.layer-foreground {
+    background: radial-gradient(circle, transparent 40%, rgba(5,5,5,0.8) 100%);
 }
 
 .hero-content-wrapper {

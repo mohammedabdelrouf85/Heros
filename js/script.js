@@ -317,113 +317,128 @@ document.addEventListener('DOMContentLoaded', () => {
     function initHeroAnimations() {
         const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
-        const introTl = gsap.timeline({
-            onComplete: () => {
-                const overlay = document.querySelector('.intro-overlay');
-                if(overlay) overlay.style.display = 'none';
-            }
-        });
+        // Remove preloader overlay immediately if present, we don't need it for this entrance
+        const overlay = document.querySelector('.intro-overlay');
+        if (overlay) {
+            gsap.set(overlay, { display: 'none' });
+        }
 
-        gsap.set('.layer-bg', { opacity: 0 });
-        gsap.set('.layer-env', { scale: 1.08, opacity: 0 });
-        gsap.set('.layer-subject', { scale: 0.92, x: 40, opacity: 0 });
-        gsap.set('.layer-light, .layer-foreground', { opacity: 0 });
-        gsap.set('.hero-subtitle, .hero-eyebrow, .hero-btn', { y: 20, opacity: 0 });
-        gsap.set('.navbar', { y: -100, opacity: 0 });
+        // 1. Initial State Setup
+        gsap.set('.layer-bg, .layer-foreground', { opacity: 1 }); // 0.00s base
+        gsap.set('.layer-env', { opacity: 0, scale: 1.05 });
+        gsap.set('.layer-subject', { opacity: 0, scale: 1.08, y: 30 });
+        gsap.set('.layer-light', { opacity: 0 });
+        gsap.set('.hero-eyebrow', { opacity: 0, y: 15 });
+        gsap.set('.hero-title .line span', { opacity: 0, y: 60 });
+        gsap.set('.hero-subtitle', { opacity: 0, y: 20 });
+        gsap.set('.hero-btn', { opacity: 0, y: 20 });
+        gsap.set('.navbar', { opacity: 0, y: -20 });
 
         if (isReducedMotion) {
-            introTl
-                .to('.intro-logo', { opacity: 1, duration: 0.8, ease: "power2.out" })
-                .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
-                .to('.intro-overlay', { opacity: 0, duration: 0.8 }, "-=0.2")
-                .to('.layer-bg, .layer-env, .layer-subject, .layer-light, .layer-foreground', { opacity: 1, duration: 1 })
-                .to('.hero-title .line span, .hero-subtitle, .hero-eyebrow, .hero-btn, .navbar', { opacity: 1, duration: 1 });
+            gsap.to('.layer-env, .layer-subject, .layer-light, .hero-eyebrow, .hero-title .line span, .hero-subtitle, .hero-btn, .navbar', {
+                opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out", stagger: 0.1
+            });
             return;
         }
 
-        introTl
-            .to('.intro-logo', { opacity: 1, duration: 0.8, ease: "power2.out" })
-            .to('.intro-logo', { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.in" })
-            .to('.intro-overlay', { opacity: 0, duration: 0.8, ease: "power2.inOut" }, "-=0.2")
-            .to('.hero-btn, .navbar', { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power2.out" }, "-=0.6")
-            .to('.layer-bg', { opacity: 1, duration: 1 }, "-=0.8")
-            .to('.layer-env', { scale: 1, opacity: 1, duration: 1.5, ease: "power3.out" }, "-=0.8")
-            .to('.layer-subject', { scale: 1, x: 0, opacity: 1, duration: 1.4, ease: "power3.out" }, "-=1.2")
-            .to('.layer-light, .layer-foreground', { opacity: 1, duration: 1.5, ease: "power2.out" }, "-=1.0")
-            .fromTo('.hero-title .line span', 
-                { y: 80, opacity: 0 }, 
-                { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out" }, 
-                "-=1.0"
-            )
-            .to('.hero-eyebrow, .hero-subtitle', { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.6");
+        // 2. Exact Choreographed Entrance Timeline
+        const heroTl = gsap.timeline({
+            defaults: { ease: "power3.out" }
+        });
 
+        heroTl
+            // 0.15s -> Environment
+            .to('.layer-env', { opacity: 1, scale: 1, duration: 1.5 }, 0.15)
+            // 0.35s -> Athlete & Light
+            .to('.layer-subject', { opacity: 1, scale: 1, y: 0, duration: 1.5 }, 0.35)
+            .to('.layer-light', { opacity: 1, duration: 1.5 }, 0.35)
+            // 0.60s -> Eyebrow
+            .to('.hero-eyebrow, .navbar', { opacity: 1, y: 0, duration: 0.8 }, 0.60)
+            // 0.80s -> Main Headline (Staggered)
+            .to('.hero-title .line span', { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power4.out" }, 0.80)
+            // 1.10s -> Subtitle
+            .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.8 }, 1.10)
+            // 1.35s -> CTA
+            .to('.hero-btn', { opacity: 1, y: 0, duration: 0.8, stagger: 0.15 }, 1.35);
+
+        // 3. Subtle Continuous Breathing (Starts after entrance)
         gsap.to('.layer-subject', {
             y: 8,
-            duration: 3.5,
+            duration: 4,
             ease: "sine.inOut",
             yoyo: true,
             repeat: -1,
-            delay: 2
+            delay: 1.6
         });
 
+        // 4. Mouse Parallax (Desktop Only)
         const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
         if (isDesktop) {
             const bgXTo = gsap.quickTo(".layer-env", "x", {duration: 0.8, ease: "power3"});
             const bgYTo = gsap.quickTo(".layer-env", "y", {duration: 0.8, ease: "power3"});
+            
             const subXTo = gsap.quickTo(".layer-subject", "x", {duration: 0.5, ease: "power3"});
             const subYTo = gsap.quickTo(".layer-subject", "y", {duration: 0.5, ease: "power3"});
+            
             const lightXTo = gsap.quickTo(".layer-light", "x", {duration: 0.3, ease: "power3"});
             const lightYTo = gsap.quickTo(".layer-light", "y", {duration: 0.3, ease: "power3"});
+            
             const fgXTo = gsap.quickTo(".layer-foreground", "x", {duration: 0.2, ease: "power3"});
             const fgYTo = gsap.quickTo(".layer-foreground", "y", {duration: 0.2, ease: "power3"});
-            const textXTo = gsap.quickTo(".hero-content-wrapper", "x", {duration: 0.4, ease: "power3"});
-            const textYTo = gsap.quickTo(".hero-content-wrapper", "y", {duration: 0.4, ease: "power3"});
+            
+            // Add slight parallax to text container for 3D feel
+            const textXTo = gsap.quickTo(".hero-content-wrapper", "x", {duration: 0.6, ease: "power3"});
+            const textYTo = gsap.quickTo(".hero-content-wrapper", "y", {duration: 0.6, ease: "power3"});
 
             document.querySelector('.hero').addEventListener("mousemove", (e) => {
                 const { innerWidth, innerHeight } = window;
                 const xNorm = (e.clientX / innerWidth) * 2 - 1;
                 const yNorm = (e.clientY / innerHeight) * 2 - 1;
 
-                bgXTo(-xNorm * 15);
-                bgYTo(-yNorm * 15);
-                subXTo(xNorm * 20);
-                subYTo(yNorm * 20);
-                lightXTo(-xNorm * 35);
-                lightYTo(-yNorm * 35);
-                fgXTo(xNorm * 40);
-                fgYTo(yNorm * 40);
-                textXTo(xNorm * 10);
-                textYTo(yNorm * 10);
+                // Subtle inverse movement
+                bgXTo(-xNorm * 10);
+                bgYTo(-yNorm * 10);
+                
+                // Subject moves slightly with mouse
+                subXTo(xNorm * 15);
+                subYTo(yNorm * 15);
+                
+                // Lighting and foreground move more drastically
+                lightXTo(-xNorm * 25);
+                lightYTo(-yNorm * 25);
+                
+                fgXTo(xNorm * 30);
+                fgYTo(yNorm * 30);
+
+                textXTo(xNorm * 5);
+                textYTo(yNorm * 5);
             });
         }
 
-        gsap.to('.layer-env', {
-            y: 100, // Background moves down a lot (stays behind)
+        // 5. Scroll Exit Transition (Cinematic Fade/Scale)
+        gsap.to('.hero-layers, .hero-content-wrapper', {
+            scale: 0.96,
+            y: -40,
+            opacity: 0.85,
             ease: "none",
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+            scrollTrigger: { 
+                trigger: ".hero", 
+                start: "top top", 
+                end: "bottom top", 
+                scrub: true 
+            }
         });
-        gsap.to('.layer-subject', {
-            y: 40, // Subject moves down, but less than background
-            scale: 1.15, // Dramatic cinematic scale-up on scroll
-            ease: "none",
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
-        });
-        gsap.to('.layer-light, .layer-foreground', {
-            y: -60, // Foreground moves up
-            ease: "none",
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
-        });
-        gsap.to('.hero-content-wrapper', {
-            y: -100, // Text moves up fastest
+        
+        // Deep fade to black just before next section takes over completely
+        gsap.to('.hero', {
             opacity: 0,
-            ease: "none",
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "center top", scrub: true }
-        });
-        // Cinematic Exit Fade to Black
-        gsap.to('.hero-layers', {
-            opacity: 0,
-            ease: "power2.inOut",
-            scrollTrigger: { trigger: ".hero", start: "center top", end: "bottom top", scrub: true }
+            ease: "power2.in",
+            scrollTrigger: { 
+                trigger: ".hero", 
+                start: "center top", 
+                end: "bottom top", 
+                scrub: true 
+            }
         });
     }
 
