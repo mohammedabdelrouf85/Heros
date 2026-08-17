@@ -628,7 +628,7 @@ html.lenis, html.lenis body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
-.price-card.best-value {
+.best-value {
     border-color: var(--accent-primary);
     box-shadow: 0 0 20px rgba(156, 163, 175, 0.1);
 }
