@@ -511,4 +511,142 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // ==========================================================================
+    // 8. Price Calculator
+    // ==========================================================================
+    const planBtns = document.querySelectorAll('.calc-btn');
+    const personSlider = document.getElementById('personSlider');
+    const personCountEl = document.getElementById('personCount');
+    const calcTotal = document.getElementById('calcTotal');
+    const calcSaving = document.getElementById('calcSaving');
+    const calcWhatsApp = document.getElementById('calcWhatsApp');
+
+    if (planBtns.length && personSlider) {
+        let selectedPrice = 700;
+        let selectedPlan = 1;
+        let persons = 1;
+
+        const baseMonthlyPrice = 700;
+
+        const planNames = { 1: 'شهر', 3: '3 شهور', 6: '6 شهور', 12: 'سنة' };
+
+        function updateCalc() {
+            const total = selectedPrice * persons;
+            const equivalent = baseMonthlyPrice * selectedPlan * persons;
+            const saved = equivalent - total;
+
+            // Animate total
+            calcTotal.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                calcTotal.style.transform = 'scale(1)';
+                calcTotal.textContent = total.toLocaleString('ar-EG') + ' ج.م';
+            }, 150);
+
+            if (saved > 0) {
+                calcSaving.textContent = `💚 توفر ${saved.toLocaleString('ar-EG')} ج.م مقارنةً بالاشتراك الشهري`;
+            } else {
+                calcSaving.textContent = '';
+            }
+
+            const planLabel = planNames[selectedPlan];
+            const msg = encodeURIComponent(`مرحباً، أريد الاشتراك في باقة ${planLabel} لـ ${persons} شخص بسعر ${total.toLocaleString('ar-EG')} ج.م`);
+            calcWhatsApp.href = `https://wa.me/201039246716?text=${msg}`;
+        }
+
+        planBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                planBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedPrice = parseInt(btn.dataset.price);
+                selectedPlan = parseInt(btn.dataset.plan);
+                updateCalc();
+            });
+        });
+
+        personSlider.addEventListener('input', () => {
+            persons = parseInt(personSlider.value);
+            personCountEl.textContent = persons;
+            updateCalc();
+        });
+
+        updateCalc();
+    }
+
+    // ==========================================================================
+    // 9. Gym Open/Closed Status
+    // ==========================================================================
+    function updateGymStatus() {
+        const statusEl = document.getElementById('gymStatus');
+        const dotEl = document.querySelector('.hours-dot');
+        if (!statusEl) return;
+
+        const now = new Date();
+        const day = now.getDay(); // 0=Sunday, 5=Friday, 6=Saturday
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const timeInMinutes = hour * 60 + minute;
+
+        // Friday: opens 8am (480), closes 2am next day (1560 = 26*60)
+        // Other days: opens 6am (360), closes 2am next day (1560)
+        const isFriday = day === 5;
+        const openTime = isFriday ? 480 : 360;
+        const closeTime = 26 * 60; // 2:00am = next day
+
+        // Handle after midnight (0am to 2am = still "open from previous day")
+        const isAfterMidnight = hour < 2;
+        const effectiveTime = isAfterMidnight ? timeInMinutes + 24 * 60 : timeInMinutes;
+
+        const isOpen = effectiveTime >= openTime && effectiveTime < closeTime;
+
+        if (isOpen) {
+            statusEl.textContent = 'الجيم مفتوح الآن ✅';
+            statusEl.style.color = '#4ade80';
+            if (dotEl) { dotEl.classList.remove('closed'); }
+        } else {
+            statusEl.textContent = 'الجيم مغلق حالياً ❌';
+            statusEl.style.color = '#f87171';
+            if (dotEl) { dotEl.classList.add('closed'); dotEl.style.background = '#f87171'; }
+        }
+    }
+
+    updateGymStatus();
+
+    // ==========================================================================
+    // 10. Animated Number Counters
+    // ==========================================================================
+    const counterEls = document.querySelectorAll('.counter-number');
+    counterEls.forEach(el => {
+        const text = el.innerText.trim();
+        const numMatch = text.match(/[\d.]+/);
+        if (!numMatch) return;
+
+        const target = parseFloat(numMatch[0]);
+        const prefix = text.startsWith('+') ? '+' : '';
+        const isDecimal = target % 1 !== 0;
+
+        ScrollTrigger.create({
+            trigger: el,
+            start: 'top 90%',
+            once: true,
+            onEnter: () => {
+                let start = 0;
+                const duration = 2000;
+                const stepTime = 20;
+                const steps = duration / stepTime;
+                const increment = target / steps;
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    el.textContent = prefix + (isDecimal ? current.toFixed(1) : Math.floor(current));
+                }, stepTime);
+            }
+        });
+    });
+
 });
